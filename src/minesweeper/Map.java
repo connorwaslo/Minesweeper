@@ -94,8 +94,11 @@ public class Map {
         if (clicked) {
             for (Tile[] ti : tileMap) {
                 for (Tile t : ti) {
-                    if (t.hasMine() && !t.isFlagged())
+
+                    // Player wins when every tile that does not contain a mine is selected
+                    if (!t.hasMine() && !t.isSelected()) {
                         return false;
+                    }
                 }
             }
 
