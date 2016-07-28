@@ -90,12 +90,8 @@ public class Game implements Runnable {
     private void update() {
         // Take input
         if (stateManager.currentState() == States.PLAY) {
-            /*if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-                map.selectTile(map.getMouseRow(window), map.getMouseCol(window));
-            } else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
-                map.flagTile(map.getMouseRow(window), map.getMouseCol(window));
-            }*/
 
+            // This input method allows for checking of SINGLE CLICK
             input.leftMousePressed(window, map);
             input.rightMousePressed(window, map);
         }
