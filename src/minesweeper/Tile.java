@@ -19,7 +19,7 @@ public class Tile {
 
     private Texture tex;
 
-    // Paths for various tiles
+    // Paths for various tile textures
     private static final String mine = "res/SelectedTileMine.png";
     private static final String flag = "res/Flag.png";
     private static final String unselected = "res/UnselectedTile.png";
