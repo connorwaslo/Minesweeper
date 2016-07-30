@@ -59,6 +59,8 @@ public class Game implements Runnable {
 
         // Register context with LWJGL 3
         GL.createCapabilities();
+        
+        Util.sync(60);
 
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
