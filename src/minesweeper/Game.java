@@ -26,7 +26,6 @@ public class Game implements Runnable {
 
     private Map map;
     private StateManager stateManager;
-    private Input input;
 
     private void start() {
         running = true;
@@ -47,6 +46,9 @@ public class Game implements Runnable {
         if (window == NULL) {
             throw new RuntimeException("Window creation failed");
         }
+        
+        // Set mouse button callback
+        glfwSetMouseButtonCallback(window, new Input());
 
         GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
         glfwSetWindowPos(window, (vidmode.width() - WIDTH) / 2, (vidmode.height() - HEIGHT) / 2);
@@ -69,7 +71,6 @@ public class Game implements Runnable {
 
         map = new Map(10);
         stateManager = new StateManager(States.PLAY);
-        input = new Input();
     }
 
     public void run() {
@@ -91,9 +92,15 @@ public class Game implements Runnable {
         // Take input
         if (stateManager.currentState() == States.PLAY) {
 
-            // This input method allows for checking of SINGLE CLICK
-            input.leftMousePressed(window, map);
-            input.rightMousePressed(window, map);
+            // Double buffer input with previous state of button and current state
+            // Get only single presses by comparing previous and current button state
+            if (Input.currButtons[GLFW_MOUSE_BUTTON_LEFT] && !Input.prevButtons[GLFW_MOUSE_BUTTON_LEFT])
+                map.selectTile(map.getMouseRow(window), map.getMouseCol(window));
+            else if (Input.currButtons[GLFW_MOUSE_BUTTON_RIGHT] && !Input.prevButtons[GLFW_MOUSE_BUTTON_RIGHT])
+                map.flagTile(map.getMouseRow(window), map.getMouseCol(window));
+
+            Input.prevButtons[GLFW_MOUSE_BUTTON_LEFT] = Input.currButtons[GLFW_MOUSE_BUTTON_LEFT];
+            Input.prevButtons[GLFW_MOUSE_BUTTON_RIGHT] = Input.currButtons[GLFW_MOUSE_BUTTON_RIGHT];
         }
 
         // If player loses
