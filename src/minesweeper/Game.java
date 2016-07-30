@@ -1,6 +1,5 @@
 package minesweeper;
 
-import de.matthiasmann.twl.utils.PNGDecoder;
 import minesweeper.states.StateManager;
 import minesweeper.states.States;
 import org.lwjgl.glfw.GLFWVidMode;
